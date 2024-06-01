@@ -1,0 +1,30 @@
+name: CICD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and Push the Image
+        run:
+          docker login --username nenedurugo14 --${{ secrets.smart_music_app }} ghcr .io
+          docker build . --tag ghcr.io/nenedurugo14/smart-music-app:latest
+          docker push ghcr.io/nenedurugo14/smart-music-app:latest
+
+
+
+  deploy:
+    needs: build
+    runs-on: aws-ec2
+    steps:
+      - name: Pull image from github
+        run: docker pull ghcr.io/nenedurugo14/smart-music-app:latest
+      - name : Delete Old Container
+        run: docker rm -f smart-music-app
+      - name: Dun docker container
+        run: docker run -d -p 3000:80 --name reactContainer nenedurugo14/smart-music-app:latest

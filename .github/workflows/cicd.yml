@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build and Push the Image
-        run:
+        run: |
           docker login --username nenedurugo14 --${{ secrets.smart_music_app }} ghcr .io
           docker build . --tag ghcr.io/nenedurugo14/smart-music-app:latest
           docker push ghcr.io/nenedurugo14/smart-music-app:latest

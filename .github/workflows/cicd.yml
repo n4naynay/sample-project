@@ -20,11 +20,11 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: aws-ec2
+    runs-on: self-hosted
     steps:
       - name: Pull image from github
         run: docker pull ghcr.io/n4naynay/smart-music-app:latest
       - name : Delete Old Container
         run: docker rm -f smart-music-app
-      - name: Dun docker container
-        run: docker run -d -p 3000:80 --name reactContainer nenedurugo14/smart-music-app:latest
+      - name: Run docker container
+        run: docker run -d -p 3000:80 --name reactContainer n4naynay/smart-music-app:latest

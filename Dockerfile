@@ -1,4 +1,4 @@
-# Step1: Build React App
+# Step 1: Build React App
 FROM node:alpine3.18 as build
 WORKDIR /app
 COPY package.json .
@@ -6,9 +6,9 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-#Step 2: Server with Nginx
+# Step 2: Server With Nginx
 FROM nginx:1.23-alpine
-WORKDIR/usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
 RUN rm -rf *
 COPY --from=build /app/dist .
 EXPOSE 80
